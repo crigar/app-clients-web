@@ -1,8 +1,8 @@
 <div align="center">
-  <div class="col-md-8 col-xs-12">
+  <div class="col-md-8 col-xs-12 style-color" >
     <form #f="ngForm" [formGroup]="data" (ngSubmit)="send()">
       <div *ngIf="type != 'user'" class="col-md-12 col-xs-12">
-        <h1>Datos Basicos de cliente</h1>
+        <h1 >Datos Basicos de cliente</h1>
       </div>
       <div class="form-group" *ngIf="user == undefined">
         <label >Nombre de Usuario</label>

@@ -2,7 +2,7 @@
   <div class="col-md-6 col-xs-12">
     <form #f="ngForm" [formGroup]="data" (ngSubmit)="search()">
       <div class="col-md-12 col-xs-12">
-        <h1>Buscar Usuario o Cliente</h1>
+        <h1 >Buscar Usuario o Cliente</h1>
       </div>
       <div class="form-group">
         <label >Nombre de usuario, documento o correo</label>
@@ -14,7 +14,7 @@
   </div>
   <div class="col-md-10 col-xs-12" *ngIf="users.length > 0">
     <div class="col-md-12 col-xs-12">
-      <h1>Buscar Usuario o Cliente</h1>
+      <h1>Resultados</h1>
     </div>
     <ngb-accordion #acc="ngbAccordion" activeIds="ngb-panel-0" *ngIf="users.length > 0">
       
@@ -26,7 +26,7 @@
         <ng-template ngbPanelContent>
           <ng-container *ngIf="user.id != userEditing && user.id != userNewCard ">
             <div class="col-md-12 col-xs-12">
-              <h1>Informacion Basica</h1>
+              <h1 class="title">Informacion Basica</h1>
             </div>
             <div class="row" align="right">
               <div class="col-md-12 col-xs-12" >
@@ -62,7 +62,7 @@
             </div>
             <ng-container *ngIf="user.creditCards.length > 0">
               <div class="col-md-12 col-xs-12">
-                <h1>Tarjetas de credito</h1>
+                <h1 class="title">Tarjetas de credito</h1>
               </div>
               <div class="col-md-12 col-xs-12" >
                 <table class="table table-striped table-responsive-sm table-responsive-md" *ngIf="user.creditCards.length > 0">
@@ -95,7 +95,7 @@
           </ng-container>
           </ng-container>
           <ng-container *ngIf="user.id == userEditing">
-            <h1>Editar Usuario</h1>
+            <h1 class="title">Editar Usuario</h1>
             <div class="row" align="right">
               <div class="col-md-12 col-xs-12" >
                 <button type="button" class="btn btn-secondary" 
@@ -105,7 +105,7 @@
             <app-user-form [type]="'user'" [user]="user"></app-user-form>
           </ng-container>
           <ng-container *ngIf="user.id == userNewCard">
-            <h1>Nueva Tarjeta de Credito</h1>
+            <h1 class="title">Nueva Tarjeta de Credito</h1>
             <div class="row" align="right">
               <div class="col-md-12 col-xs-12" >
                 <button type="button" class="btn btn-secondary" 
