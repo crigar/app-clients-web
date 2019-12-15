@@ -13,6 +13,7 @@ export class SearchComponent implements OnInit {
   public data: FormGroup;
   public users = []
   public userEditing;
+  public userNewCard;
   public response = {
     show: false,
     type: 'success',
@@ -33,6 +34,12 @@ export class SearchComponent implements OnInit {
 
   edit( userId ){
     this.userEditing = userId;
+    this.userNewCard = undefined;
+  }
+
+  newCard( userId ){
+    this.userNewCard = userId;
+    this.userEditing = undefined;
   }
 
   search(){

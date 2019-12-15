@@ -24,68 +24,98 @@
            <b>Correo</b> {{user.email}}
         </ng-template>
         <ng-template ngbPanelContent>
-          <div class="col-md-12 col-xs-12">
-            <h1>Informacion Basica</h1>
-          </div>
-          <div class="col-md-12 col-xs-12" align="right">
-            <button type="button" class="btn btn-info" (click)="edit(user.id)">Editar</button>
-          </div>
-          <div class="col-md-6 col-xs-12" >
-            <table class="table table-striped">
-              <thead>
-              <tr>
-                <th scope="col">Nombre</th>
-                <th scope="col">Usuario</th>
-                <th scope="col">Documento</th>
-                <th scope="col">Telefono</th>
-              </tr>
-              </thead>
-              <tbody>
-              <tr>
-                <td>{{ user.name }}</td>
-                <td>{{ user.username }}</td>
-                <td>{{ user.document }}</td>
-                <td>{{ user.phone }}</td>
-                <td>{{ user.pan }}</td>
-                <td>{{ user.entity }}</td>
-              </tr>
-              </tbody>
-            </table>
-          </div>
-          <ng-container *ngIf="user.creditCards.length > 0">
+          <ng-container *ngIf="user.id != userEditing && user.id != userNewCard ">
             <div class="col-md-12 col-xs-12">
-              <h1>Tarjetas de credito</h1>
+              <h1>Informacion Basica</h1>
             </div>
-            <div class="col-md-10 col-xs-12" >
-              <table class="table table-striped" *ngIf="user.creditCards.length > 0">
+            <div class="row" align="right">
+              <div class="col-md-12 col-xs-12" >
+                <button type="button" class="btn btn-info" (click)="edit(user.id)">Editar</button>
+              </div>
+            </div>
+            <div class="row" align="right">
+              <div class="col-md-12 col-xs-12" >
+                <button type="button" class="btn btn-info" (click)="newCard(user.id)">Nueva Tarjeta</button>
+              </div>
+            </div>
+            <div class="col-md-6 col-xs-12" >
+              <table class="table table-striped table-responsive-sm table-responsive-md">
                 <thead>
                 <tr>
-                  <th scope="col">#</th>
-                  <th scope="col">Numero de Cuenta</th>
-                  <th scope="col">Fecha de Vencimiento</th>
-                  <th scope="col">Codigo de Verificacion</th>
-                  <th scope="col">Brand</th>
-                  <th scope="col">Entidad</th>
-                  <th scope="col">Nit</th>
+                  <th scope="col">Nombre</th>
+                  <th scope="col">Usuario</th>
+                  <th scope="col">Documento</th>
                   <th scope="col">Telefono</th>
                 </tr>
                 </thead>
                 <tbody>
-                <tr *ngFor="let card of user.creditCards; index as i">
-                  <th scope="row">{{ i + 1 }}</th>
-                  <td>{{ card.pan }}</td>
-                  <td>{{ card.expirationDate | date: 'longDate' }}</td>
-                  <td>{{ card.cvv }}</td>
-                  <td>{{ card.brand }}</td>
-                  <td>{{ card.entity.name }}</td>
-                  <td>{{ card.entity.nit }}</td>
-                  <td>{{ card.entity.phone }}</td>
+                <tr>
+                  <td>{{ user.name }}</td>
+                  <td>{{ user.username }}</td>
+                  <td>{{ user.document }}</td>
+                  <td>{{ user.phone }}</td>
+                  <td>{{ user.pan }}</td>
+                  <td>{{ user.entity }}</td>
                 </tr>
                 </tbody>
               </table>
             </div>
+            <ng-container *ngIf="user.creditCards.length > 0">
+              <div class="col-md-12 col-xs-12">
+                <h1>Tarjetas de credito</h1>
+              </div>
+              <div class="col-md-12 col-xs-12" >
+                <table class="table table-striped table-responsive-sm table-responsive-md" *ngIf="user.creditCards.length > 0">
+                  <thead>
+                  <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Numero de Cuenta</th>
+                    <th scope="col">Fecha de Vencimiento</th>
+                    <th scope="col">Codigo de Verificacion</th>
+                    <th scope="col">Brand</th>
+                    <th scope="col">Entidad</th>
+                    <th scope="col">Nit</th>
+                    <th scope="col">Telefono</th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                  <tr *ngFor="let card of user.creditCards; index as i">
+                    <th scope="row">{{ i + 1 }}</th>
+                    <td>{{ card.pan }}</td>
+                    <td>{{ card.expirationDate | date: 'longDate' }}</td>
+                    <td>{{ card.cvv }}</td>
+                    <td>{{ card.brand }}</td>
+                    <td>{{ card.entity.name }}</td>
+                    <td>{{ card.entity.nit }}</td>
+                    <td>{{ card.entity.phone }}</td>
+                  </tr>
+                  </tbody>
+                </table>
+              </div>
           </ng-container>
-          
+          </ng-container>
+          <ng-container *ngIf="user.id == userEditing">
+            <h1>Editar Usuario</h1>
+            <div class="row" align="right">
+              <div class="col-md-12 col-xs-12" >
+                <button type="button" class="btn btn-secondary" 
+                (click)="userNewCard = undefined;userEditing = undefined;">Cancelar</button>
+              </div>
+            </div>
+            <app-user-form [type]="'user'" [user]="user"></app-user-form>
+          </ng-container>
+          <ng-container *ngIf="user.id == userNewCard">
+            <h1>Nueva Tarjeta de Credito</h1>
+            <div class="row" align="right">
+              <div class="col-md-12 col-xs-12" >
+                <button type="button" class="btn btn-secondary" 
+                (click)="userNewCard = undefined;userEditing = undefined;">Cancelar</button>
+              </div>
+            </div>
+            <app-credit-card-form (add)="addClient($event)" [type]="new" [userId]="user.id">
+
+            </app-credit-card-form>
+          </ng-container>
         </ng-template>
       </ngb-panel>
     </ngb-accordion>

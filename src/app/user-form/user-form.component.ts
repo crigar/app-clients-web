@@ -11,6 +11,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 })
 export class UserFormComponent implements OnInit {
   @Input('type') type: any = {};
+  @Input('user') user;
 
   public data: FormGroup;
   public response = {
@@ -27,8 +28,28 @@ export class UserFormComponent implements OnInit {
   ) { }
 
   send(){
-    if ( this.type == 'user' ) {
+    if ( this.user == undefined ) {
       this.apiService.newUser(this.data.value)
+      .subscribe((res: any) => {
+        console.log(res);
+        if(res.success == true){
+          this.response.show = true
+          this.response.type = 'success'
+          this.response.message = res.message
+ 
+        }else if(res.error == undefined){
+          
+        }else{
+          //this.helperService.toast('error', 'Error', undefined);
+        }
+        setTimeout(() => { 
+          this.response.show = false;
+         }, 2000);
+      },(error) => {
+        //this.helperService.toast('error', 'Error', undefined);
+      });
+    }else{
+      this.apiService.updateUser(this.data.value, this.user.id)
       .subscribe((res: any) => {
         console.log(res);
         if(res.success == true){
@@ -52,8 +73,7 @@ export class UserFormComponent implements OnInit {
 
   public addClient( event ){
     this.data.controls.creditCardsInfo.setValue( [ event.data ] );
-    console.log(this.data.value);
-    
+    console.log('asdfsaf',this.data.value);
     this.apiService.newClient(this.data.value)
       .subscribe((res: any) => {
         console.log(res);
@@ -78,17 +98,21 @@ export class UserFormComponent implements OnInit {
 
   ngOnInit() {
     this.data = this.fb.group({
-      username: ['', [Validators.required]],
+      username: [( this.user != undefined ? this.user.username: '' ), [Validators.required]],
       pass: ['', [Validators.required]],
       passAgain: ['', [Validators.required]],
-      document: ['', [Validators.required]],
-      name: ['', [Validators.required]],
-      email: ['', [Validators.required]],
-      phone: ['', [Validators.required]],
+      document: [( this.user != undefined ? this.user.document: '' ), [Validators.required]],
+      name: [( this.user != undefined ? this.user.name: '' ), [Validators.required]],
+      email: [( this.user != undefined ? this.user.email: '' ), [Validators.required]],
+      phone: [( this.user != undefined ? this.user.phone: '' ), [Validators.required]],
       userRoles: [[ ( ( this.type == 'user' )?1:2 ) ], [Validators.required]],
       creditCardsInfo: ['', [Validators.required]],
     });
     if (this.type == 'user') this.data.removeControl('creditCardsInfo');
+    if (this.user != undefined) {
+      this.data.removeControl('pass');
+      this.data.removeControl('passAgain');
+    }
     console.log(this.type);
     
   }

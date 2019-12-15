@@ -11,8 +11,14 @@ import { ActivatedRoute, Router } from '@angular/router';
 export class CreditCardFormComponent implements OnInit {
   @Output('add') add = new EventEmitter<any>();
   @Input('type') type: any = {};
+  @Input('userId') userId;
   public data: FormGroup;
   public entities = [];
+  public response = {
+    show: false,
+    type: 'success',
+    message: '',
+  }
   constructor(
     private fb: FormBuilder,
     private apiService: ApiService,
@@ -20,9 +26,39 @@ export class CreditCardFormComponent implements OnInit {
   ) { }
 
   send(){
-    this.add.emit({
-      data: this.data.value
-    });
+    if (this.userId == undefined) {
+      console.log('entrooooo',this.data.value);
+      
+      this.add.emit({
+        data: this.data.value
+      });
+    }else{
+      console.log(this.data.value);
+      
+      this.apiService.newCard(this.data.value, this.userId)
+      .subscribe((res: any) => {
+        console.log(res);
+        if(res.success == true){
+          this.response.show = true
+          this.response.type = 'success'
+          this.response.message = res.message
+ 
+        }else if(res.error == undefined){
+          this.response.show = true
+          this.response.type = 'danger'
+          this.response.message = res.message
+        }else{
+          this.response.show = true
+          this.response.type = 'danger'
+          this.response.message = res.message
+        }
+        setTimeout(() => { 
+          this.response.show = false;
+         }, 2000);
+      },(error) => {
+        //this.helperService.toast('error', 'Error', undefined);
+      });
+    }
   }
 
   getEntities(){

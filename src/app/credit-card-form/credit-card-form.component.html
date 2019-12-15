@@ -11,22 +11,22 @@
       </div>
       <div class="form-group">
         <label >Numero de Cuenta Personal (PAN)</label>
-        <input type="text" formControlName="pan" class="form-control" id="exampleInputPassword1" placeholder="Password">
+        <input type="text" formControlName="pan" class="form-control" id="exampleInputPassword1" placeholder="Pan">
       </div>
       <div class="form-group">
         <label >Fecha de Expiracion </label>
-        <input type="text" formControlName="expirationDate" class="form-control" id="exampleInputPassword1" placeholder="Password">
+        <input type="text" formControlName="expirationDate" class="form-control" id="exampleInputPassword1" placeholder="Fecha de Expiracion">
       </div>
       <div class="form-group">
         <label >Codigo de Verificacion</label>
-        <input type="text" formControlName="cvv" class="form-control" id="exampleInputPassword1" placeholder="Password">
+        <input type="text" formControlName="cvv" class="form-control" id="exampleInputPassword1" placeholder="CVV">
       </div>
       <div class="form-group">
         <label >Marca Internacional</label>
-        <input type="text" formControlName="brand" class="form-control" id="exampleInputPassword1" placeholder="Password">
+        <input type="text" formControlName="brand" class="form-control" id="exampleInputPassword1" placeholder="Marca">
       </div>
-      
-      <button type="submit" class="btn btn-primary" [disabled]="!data.valid">Agregar Cliente</button>
+      <ngb-alert *ngIf="response.show" type="{{response.type}}" (close)="true">{{response.message}}</ngb-alert>
+      <button type="submit" class="btn btn-primary" [disabled]="!data.valid">Agregar</button>
     </form>
   </div>
   

@@ -11,6 +11,12 @@ import { ActivatedRoute, Router } from '@angular/router';
 })
 export class EntityComponent implements OnInit {
   public data: FormGroup;
+  public entities = [];
+  public response = {
+    show: true,
+    type: 'success',
+    message: '',
+  }
   constructor(
     private fb: FormBuilder,
     private apiService: ApiService,
@@ -22,20 +28,37 @@ export class EntityComponent implements OnInit {
       .subscribe((res: any) => {
         console.log(res);
         if(res.success == true){
-          //this.helperService.toast('success', 'Ok!', res.message);
-          //let to: string = this._authService.getRedirectUrl() || '/convocatories';
-          //this._router.navigate([to]);
+          this.response.show = true
+          this.response.type = 'success'
+          this.response.message = res.message
+          this.getEntities();
         }else if(res.error == undefined){
-          //this.helperService.toast('warning', '¡Atención!', res.message);
+          this.response.show = true
+          this.response.type = 'danger'
+          this.response.message = res.message
         }else{
-          //this.helperService.toast('error', 'Error', undefined);
+          this.response.show = true
+          this.response.type = 'danger'
+          this.response.message = res.message
         }
+        setTimeout(() => { 
+          this.response.show = false;
+         }, 2000);
       },(error) => {
         //this.helperService.toast('error', 'Error', undefined);
       });
   }
 
+  getEntities(){
+    this.apiService.getEntities()
+      .subscribe((res: any) => {
+        this.entities = res;
+        console.log(res);
+      });
+  }
+
   ngOnInit() {
+    this.getEntities();
     this.data = this.fb.group({
       nit: ['', [Validators.required]],
       name: ['', [Validators.required]],

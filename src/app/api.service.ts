@@ -41,4 +41,14 @@ export class ApiService {
     let url = this.url + 'user/search?param=' + param;
     return this.http.get(url);
   }
+
+  public updateUser( data, userId ){
+    let url = this.url + 'client/'+userId+'/update';
+    return this.http.put(url, data);
+  }
+
+  public newCard( data, userId ){
+    let url = this.url + 'client/'+userId+'/new-card';
+    return this.http.post(url, data);
+  }
 }
