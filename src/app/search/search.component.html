@@ -1,0 +1,93 @@
+<div align="center">
+  <div class="col-md-6 col-xs-12">
+    <form #f="ngForm" [formGroup]="data" (ngSubmit)="search()">
+      <div class="col-md-12 col-xs-12">
+        <h1>Buscar Usuario o Cliente</h1>
+      </div>
+      <div class="form-group">
+        <label >Nombre de usuario, documento o correo</label>
+        <input type="text" formControlName="param" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="parametro de busqueda">
+      </div>
+      <ngb-alert *ngIf="response.show" type="{{response.type}}" (close)="true">{{response.message}}</ngb-alert>
+      <button  type="submit" class="btn btn-primary" [disabled]="!data.valid">Buscar</button>
+    </form>
+  </div>
+  <div class="col-md-10 col-xs-12" *ngIf="users.length > 0">
+    <div class="col-md-12 col-xs-12">
+      <h1>Buscar Usuario o Cliente</h1>
+    </div>
+    <ngb-accordion #acc="ngbAccordion" activeIds="ngb-panel-0" *ngIf="users.length > 0">
+      
+      <ngb-panel *ngFor="let user of users; index as i">
+        <ng-template ngbPanelTitle >
+           <b>Nombre</b> {{user.name}} <br>
+           <b>Correo</b> {{user.email}}
+        </ng-template>
+        <ng-template ngbPanelContent>
+          <div class="col-md-12 col-xs-12">
+            <h1>Informacion Basica</h1>
+          </div>
+          <div class="col-md-12 col-xs-12" align="right">
+            <button type="button" class="btn btn-info" (click)="edit(user.id)">Editar</button>
+          </div>
+          <div class="col-md-6 col-xs-12" >
+            <table class="table table-striped">
+              <thead>
+              <tr>
+                <th scope="col">Nombre</th>
+                <th scope="col">Usuario</th>
+                <th scope="col">Documento</th>
+                <th scope="col">Telefono</th>
+              </tr>
+              </thead>
+              <tbody>
+              <tr>
+                <td>{{ user.name }}</td>
+                <td>{{ user.username }}</td>
+                <td>{{ user.document }}</td>
+                <td>{{ user.phone }}</td>
+                <td>{{ user.pan }}</td>
+                <td>{{ user.entity }}</td>
+              </tr>
+              </tbody>
+            </table>
+          </div>
+          <ng-container *ngIf="user.creditCards.length > 0">
+            <div class="col-md-12 col-xs-12">
+              <h1>Tarjetas de credito</h1>
+            </div>
+            <div class="col-md-10 col-xs-12" >
+              <table class="table table-striped" *ngIf="user.creditCards.length > 0">
+                <thead>
+                <tr>
+                  <th scope="col">#</th>
+                  <th scope="col">Numero de Cuenta</th>
+                  <th scope="col">Fecha de Vencimiento</th>
+                  <th scope="col">Codigo de Verificacion</th>
+                  <th scope="col">Brand</th>
+                  <th scope="col">Entidad</th>
+                  <th scope="col">Nit</th>
+                  <th scope="col">Telefono</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr *ngFor="let card of user.creditCards; index as i">
+                  <th scope="row">{{ i + 1 }}</th>
+                  <td>{{ card.pan }}</td>
+                  <td>{{ card.expirationDate | date: 'longDate' }}</td>
+                  <td>{{ card.cvv }}</td>
+                  <td>{{ card.brand }}</td>
+                  <td>{{ card.entity.name }}</td>
+                  <td>{{ card.entity.nit }}</td>
+                  <td>{{ card.entity.phone }}</td>
+                </tr>
+                </tbody>
+              </table>
+            </div>
+          </ng-container>
+          
+        </ng-template>
+      </ngb-panel>
+    </ngb-accordion>
+  </div>
+</div>

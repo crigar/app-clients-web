@@ -13,12 +13,32 @@ export class ApiService {
   ) { }
 
   public login( data ){
-    let url = this.url + 'user/sign-up'
-    return this.http.post(url, data);
+    let url = this.url + 'login'
+    return this.http.post(url,data);
   }
 
   public newUser( data ){
     let url = this.url + 'user/sign-up'
     return this.http.post(url, data);
+  }
+
+  public newClient( data ){
+    let url = this.url + 'client/create'
+    return this.http.post(url, data);
+  }
+
+  public newEntity( data ){
+    let url = this.url + 'entity/create'
+    return this.http.post(url, data);
+  }
+
+  public getEntities(  ){
+    let url = this.url + 'entity/all-entities'
+    return this.http.get(url);
+  }
+
+  public getUserByParam( param ){
+    let url = this.url + 'user/search?param=' + param;
+    return this.http.get(url);
   }
 }

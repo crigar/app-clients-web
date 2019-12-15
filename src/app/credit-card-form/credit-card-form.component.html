@@ -1,0 +1,33 @@
+<div align="center">
+  
+  <div class="col-md-12 col-xs-12">
+    <form #f="ngForm" [formGroup]="data" (ngSubmit)="send()">
+      <div class="form-group">
+        <label >Entidad</label>
+        <select formControlName="entity" class="form-control" >
+          <option [value]="entity.id" *ngFor="let entity of entities">{{entity.name}}</option>
+          <option value="" selected>Seleccione uno</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label >Numero de Cuenta Personal (PAN)</label>
+        <input type="text" formControlName="pan" class="form-control" id="exampleInputPassword1" placeholder="Password">
+      </div>
+      <div class="form-group">
+        <label >Fecha de Expiracion </label>
+        <input type="text" formControlName="expirationDate" class="form-control" id="exampleInputPassword1" placeholder="Password">
+      </div>
+      <div class="form-group">
+        <label >Codigo de Verificacion</label>
+        <input type="text" formControlName="cvv" class="form-control" id="exampleInputPassword1" placeholder="Password">
+      </div>
+      <div class="form-group">
+        <label >Marca Internacional</label>
+        <input type="text" formControlName="brand" class="form-control" id="exampleInputPassword1" placeholder="Password">
+      </div>
+      
+      <button type="submit" class="btn btn-primary" [disabled]="!data.valid">Agregar Cliente</button>
+    </form>
+  </div>
+  
+</div>

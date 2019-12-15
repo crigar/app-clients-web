@@ -12,6 +12,10 @@ import { HttpClientModule} from "@angular/common/http";
 import { ToastrModule } from 'ngx-toastr';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { JwtModule } from '@auth0/angular-jwt';
+import { OptionsComponent } from './options/options.component';
+import { CreditCardFormComponent } from './credit-card-form/credit-card-form.component';
+import { EntityComponent } from './entity/entity.component';
+import { SearchComponent } from './search/search.component';
 
 export function tokenGetter() {
   return localStorage.getItem('token');
@@ -24,6 +28,10 @@ export function tokenGetter() {
     DashboardComponent,
     HomeComponent,
     UserFormComponent,
+    OptionsComponent,
+    CreditCardFormComponent,
+    EntityComponent,
+    SearchComponent,
     
   ],
   imports: [
