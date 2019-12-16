@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { ApiService } from '../api.service';
 import { HelperService } from '../helper.service';
 import { ActivatedRoute, Router } from '@angular/router';
+import { AppValidators } from '../app-validators';
 @Component({
   selector: 'app-credit-card-form',
   templateUrl: './credit-card-form.component.html',
@@ -74,7 +75,7 @@ export class CreditCardFormComponent implements OnInit {
     this.data = this.fb.group({
       entity: ['', []],
       pan: ['', [Validators.required]],
-      expirationDate: ['', [Validators.required]],
+      expirationDate: ['', [Validators.required, AppValidators.futureDate]],
       cvv: ['', [Validators.required]],
       brand: ['', [Validators.required]],
     });

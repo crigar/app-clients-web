@@ -12,14 +12,17 @@
       <div class="form-group">
         <label >Numero de Cuenta Personal (PAN)</label>
         <input type="text" formControlName="pan" class="form-control" id="exampleInputPassword1" placeholder="Pan">
+        <control-messages [control]="data.controls.pan"></control-messages>
       </div>
       <div class="form-group">
         <label >Fecha de Expiracion </label>
-        <input type="text" formControlName="expirationDate" class="form-control" id="exampleInputPassword1" placeholder="Fecha de Expiracion">
+        <input type="date" formControlName="expirationDate" class="form-control" id="exampleInputPassword1" placeholder="Fecha de Expiracion">
+        <control-messages [control]="data.controls.expirationDate"></control-messages>
       </div>
       <div class="form-group">
         <label >Codigo de Verificacion</label>
         <input type="text" formControlName="cvv" class="form-control" id="exampleInputPassword1" placeholder="CVV">
+        <control-messages [control]="data.controls.cvv"></control-messages>
       </div>
       <div class="form-group">
         <label >Marca Internacional</label>

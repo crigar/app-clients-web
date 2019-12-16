@@ -7,18 +7,22 @@
       <div class="form-group" *ngIf="user == undefined">
         <label >Nombre de Usuario</label>
         <input type="text" formControlName="username" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Usuario">
+        <control-messages [control]="data.controls.username"></control-messages>
       </div>
       <div class="form-group" *ngIf="user == undefined">
         <label >Contraseña</label>
         <input type="password" formControlName="pass" class="form-control" id="exampleInputPassword1" placeholder="Password">
+        <control-messages [control]="data.controls.pass"></control-messages>
       </div>
       <div class="form-group" *ngIf="user == undefined">
         <label >Repirta Contraseña </label>
         <input type="password" formControlName="passAgain" class="form-control" id="exampleInputPassword1" placeholder="Password">
+        <control-messages [control]="data.controls.passAgain"></control-messages>
       </div>
       <div class="form-group">
         <label >Correo</label>
         <input type="email" formControlName="email" class="form-control" id="exampleInputPassword1" placeholder="Correo">
+        <control-messages [control]="data.controls.email"></control-messages>
       </div>
       <div class="form-group">
         <label >Documento</label>

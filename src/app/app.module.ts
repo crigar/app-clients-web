@@ -16,6 +16,7 @@ import { OptionsComponent } from './options/options.component';
 import { CreditCardFormComponent } from './credit-card-form/credit-card-form.component';
 import { EntityComponent } from './entity/entity.component';
 import { SearchComponent } from './search/search.component';
+import { ControlMessagesComponent } from './control-messages/control-messages.component';
 
 export function tokenGetter() {
   return localStorage.getItem('token');
@@ -32,6 +33,7 @@ export function tokenGetter() {
     CreditCardFormComponent,
     EntityComponent,
     SearchComponent,
+    ControlMessagesComponent,
     
   ],
   imports: [

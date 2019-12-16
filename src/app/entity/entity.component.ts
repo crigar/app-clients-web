@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { ApiService } from '../api.service';
 import { HelperService } from '../helper.service';
 import { ActivatedRoute, Router } from '@angular/router';
+import { AppValidators } from '../app-validators';
 
 @Component({
   selector: 'app-entity',
@@ -60,7 +61,7 @@ export class EntityComponent implements OnInit {
   ngOnInit() {
     this.getEntities();
     this.data = this.fb.group({
-      nit: ['', [Validators.required]],
+      nit: ['', [Validators.required, AppValidators.nit]],
       name: ['', [Validators.required]],
       description: ['', [Validators.required]],
       phone: ['', [Validators.required]],

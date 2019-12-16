@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { ApiService } from '../api.service';
 import { HelperService } from '../helper.service';
 import { ActivatedRoute, Router } from '@angular/router';
+import { AppValidators } from '../app-validators';
 
 @Component({
   selector: 'app-user-form',
@@ -98,12 +99,12 @@ export class UserFormComponent implements OnInit {
 
   ngOnInit() {
     this.data = this.fb.group({
-      username: [( this.user != undefined ? this.user.username: '' ), [Validators.required]],
+      username: [( this.user != undefined ? this.user.username: '' ), [Validators.required, AppValidators.username]],
       pass: ['', [Validators.required]],
-      passAgain: ['', [Validators.required]],
+      passAgain: ['', [Validators.required, AppValidators.same({ name: 'pass', label: 'Contraseña' })]],
       document: [( this.user != undefined ? this.user.document: '' ), [Validators.required]],
       name: [( this.user != undefined ? this.user.name: '' ), [Validators.required]],
-      email: [( this.user != undefined ? this.user.email: '' ), [Validators.required]],
+      email: [( this.user != undefined ? this.user.email: '' ), [Validators.required, AppValidators.email]],
       phone: [( this.user != undefined ? this.user.phone: '' ), [Validators.required]],
       userRoles: [[ ( ( this.type == 'user' )?1:2 ) ], [Validators.required]],
       creditCardsInfo: ['', [Validators.required]],
