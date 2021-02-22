@@ -37,8 +37,28 @@ export class ApiService {
     return this.http.get(url);
   }
 
+  public getCities(  ){
+    let url = this.url + 'city/index'
+    return this.http.get(url);
+  }
+
+  public getSedes( cityId ){
+    let url = this.url + 'sede/get-sedes/' + cityId
+    return this.http.get(url);
+  }
+
+  public getClients(  ){
+    let url = this.url + 'user/get-clientes'
+    return this.http.get(url);
+  }
+
+  public agregarCliente( data ){
+    let url = this.url + 'user/set-sede'
+    return this.http.post(url, data);
+  }
+
   public getUserByParam( param ){
-    let url = this.url + 'user/search?param=' + param;
+    let url = this.url + 'user/search?sede=' + param;
     return this.http.get(url);
   }
 
@@ -49,6 +69,16 @@ export class ApiService {
 
   public newCard( data, userId ){
     let url = this.url + 'client/'+userId+'/new-card';
+    return this.http.post(url, data);
+  }
+  
+  public newCity( data ){
+    let url = this.url + 'city/create';
+    return this.http.post(url, data);
+  } 
+
+  public newSede( data ){
+    let url = this.url + 'sede/create';
     return this.http.post(url, data);
   }
 }

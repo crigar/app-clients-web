@@ -36,13 +36,10 @@
         <label >Telefono</label>
         <input type="text" formControlName="phone" class="form-control" id="exampleInputPassword1" placeholder="Telefono o celular">
       </div>
-      <div *ngIf="type != 'user' && user == undefined" class="col-md-12 col-xs-12">
-        <h1>Tarjeta de Credito</h1>
-        <app-credit-card-form (add)="addClient($event)" (type)="'client'"></app-credit-card-form>
-      </div>
+      
       <ngb-alert *ngIf="!data.valid" type="danger" (close)="true">Por favor llene todos los campos antes de agregar el cliente</ngb-alert>
       <ngb-alert *ngIf="response.show" type="{{response.type}}" (close)="true">{{response.message}}</ngb-alert>
-      <button *ngIf="type == 'user'" type="submit" class="btn btn-primary" [disabled]="!data.valid">{{ type == 'user' ? 'Enviar': 'Agregar Cliente' }}</button>
+      <button  type="submit" class="btn btn-primary" [disabled]="!data.valid">{{ type == 'user' ? 'Enviar': 'Agregar Cliente' }}</button>
     </form>
   </div>
   

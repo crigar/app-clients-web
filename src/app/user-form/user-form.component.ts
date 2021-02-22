@@ -107,9 +107,9 @@ export class UserFormComponent implements OnInit {
       email: [( this.user != undefined ? this.user.email: '' ), [Validators.required, AppValidators.email]],
       phone: [( this.user != undefined ? this.user.phone: '' ), [Validators.required]],
       userRoles: [[ ( ( this.type == 'user' )?1:2 ) ], [Validators.required]],
-      creditCardsInfo: ['', [Validators.required]],
+    //creditCardsInfo: ['', [Validators.required]],
     });
-    if (this.type == 'user') this.data.removeControl('creditCardsInfo');
+    //if (this.type == 'user') this.data.removeControl('creditCardsInfo');
     if (this.user != undefined) {
       this.data.removeControl('pass');
       this.data.removeControl('passAgain');

@@ -11,8 +11,14 @@ import { AppValidators } from '../app-validators';
   styleUrls: ['./entity.component.css']
 })
 export class EntityComponent implements OnInit {
-  public data: FormGroup;
+  public city: FormGroup;
+  public sede: FormGroup;
+  public client: FormGroup;
   public entities = [];
+  public cities = [];
+  public clients = [];
+  public sedes = [];
+  public cityId;
   public response = {
     show: true,
     type: 'success',
@@ -24,15 +30,41 @@ export class EntityComponent implements OnInit {
     private helperService: HelperService,
   ) { }
 
-  send(){
-    this.apiService.newEntity(this.data.value)
+  newCity(){
+    this.apiService.newCity(this.city.value)
       .subscribe((res: any) => {
         console.log(res);
         if(res.success == true){
           this.response.show = true
           this.response.type = 'success'
           this.response.message = res.message
-          this.getEntities();
+          this.getCities();
+        }else if(res.error == undefined){
+          this.response.show = true
+          this.response.type = 'danger'
+          this.response.message = res.message
+        }else{
+          this.response.show = true
+          this.response.type = 'danger'
+          this.response.message = res.message
+        }
+        setTimeout(() => { 
+          this.response.show = false;
+         }, 2000);
+      },(error) => {
+        //this.helperService.toast('error', 'Error', undefined);
+      });
+  }
+
+  newSede(){
+    this.apiService.newSede(this.sede.value)
+      .subscribe((res: any) => {
+        console.log(res);
+        if(res.success == true){
+          this.response.show = true
+          this.response.type = 'success'
+          this.response.message = res.message
+          this.getCities();
         }else if(res.error == undefined){
           this.response.show = true
           this.response.type = 'danger'
@@ -57,14 +89,77 @@ export class EntityComponent implements OnInit {
         console.log(res);
       });
   }
+  getCities(){
+    this.apiService.getCities()
+      .subscribe((res: any) => {
+        this.cities = res;
+        console.log(res);
+      });
+  }
+
+  changeCity(){
+    console.log(this.client)
+    this.cityId = this.client.controls.city.value;
+    this.getSedes();
+  }
+
+  getClients(){
+    this.apiService.getClients()
+      .subscribe((res: any) => {
+        this.clients = res;
+        console.log(res);
+      });
+  }
+
+  agregarCliente(){
+    this.apiService.agregarCliente(this.client.value)
+      .subscribe((res: any) => {
+        if(res.success == true){
+          this.response.show = true
+          this.response.type = 'success'
+          this.response.message = res.message
+          this.getCities();
+        }else if(res.error == undefined){
+          this.response.show = true
+          this.response.type = 'danger'
+          this.response.message = res.message
+        }else{
+          this.response.show = true
+          this.response.type = 'danger'
+          this.response.message = res.message
+        }
+        setTimeout(() => { 
+          this.response.show = false;
+         }, 2000);
+      },(error) => {
+        //this.helperService.toast('error', 'Error', undefined);
+      });
+  }
+ 
+  getSedes(){
+    this.apiService.getSedes(this.cityId)
+      .subscribe((res: any) => {
+        this.sedes = res;
+        console.log(res);
+      });
+  }
 
   ngOnInit() {
-    this.getEntities();
-    this.data = this.fb.group({
-      nit: ['', [Validators.required, AppValidators.nit]],
+    this.getCities();
+    this.getClients();
+    this.city = this.fb.group({
       name: ['', [Validators.required]],
-      description: ['', [Validators.required]],
-      phone: ['', [Validators.required]],
+    });
+    this.sede = this.fb.group({
+      name: ['', [Validators.required]],
+      address: ['', [Validators.required]],
+      city: ['', [Validators.required]],
+    });
+
+    this.client = this.fb.group({
+      city: ['', [Validators.required]],
+      client: ['', [Validators.required]],
+      sede: ['', [Validators.required]],
     });
   }
 

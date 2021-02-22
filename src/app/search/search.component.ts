@@ -12,6 +12,10 @@ import { HelperService } from '../helper.service';
 export class SearchComponent implements OnInit {
   public data: FormGroup;
   public users = []
+  public cities = []
+  public clients = [];
+  public sedes = [];
+  public cityId;
   public userEditing;
   public userNewCard;
   public response = {
@@ -27,8 +31,10 @@ export class SearchComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.getCities();
     this.data = this.fb.group({
-      param: ['', [Validators.required]],
+      city: ['', [Validators.required]],
+      sede: ['', [Validators.required]],
     });
   }
 
@@ -42,28 +48,41 @@ export class SearchComponent implements OnInit {
     this.userEditing = undefined;
   }
 
+  getCities(){
+    this.apiService.getCities()
+      .subscribe((res: any) => {
+        this.cities = res;
+        console.log(res);
+      });
+  }
+
+  getSedes(){
+    this.apiService.getSedes(this.cityId)
+      .subscribe((res: any) => {
+        this.sedes = res;
+        console.log(res);
+      });
+  }
+
+
+  changeCity(){
+    this.cityId = this.data.controls.city.value;
+    this.getSedes();
+  }
+
+  getClients(){
+    this.apiService.getClients()
+      .subscribe((res: any) => {
+        this.clients = res;
+        console.log(res);
+      });
+  }
+
   search(){
-    this.apiService.getUserByParam(this.data.value.param)
+    this.apiService.getUserByParam(this.data.controls.sede.value)
       .subscribe((res: any) => {
         console.log(res);
-        if(res.success == true){
-          this.response.show = true
-          this.response.type = 'success'
-          this.response.message = res.message
-          this.users = res.data;
- 
-        }else if(res.error == undefined){
-          this.response.show = true
-          this.response.type = 'danger'
-          this.response.message = res.message
-          this.users = [];
-        }else{
-        }
-        setTimeout(() => { 
-          this.response.show = false;
-         }, 2000);
-      },(error) => {
-        //this.helperService.toast('error', 'Error', undefined);
+        this.clients = res;
       });
   }
 
